@@ -1,19 +1,21 @@
 package main
 
 import (
-	"log"
-
 	"github.com/Dima-F/dream-job/config"
 	"github.com/Dima-F/dream-job/internal/home"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
 func main() {
 	config.Init()
-	dbConf := config.NewDatabaseConfig()
-	log.Println(dbConf)
+	config.NewDatabaseConfig()
+	logConfig := config.NewLogConfig()
+	log.SetLevel(log.Level(logConfig.Level))
 	app := fiber.New()
+	app.Use(logger.New())
 	app.Use(recover.New())
 
 	home.NewHandler(app)
