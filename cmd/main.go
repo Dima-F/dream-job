@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/contrib/fiberzerolog"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/template/html/v2"
 )
 
 func main() {
@@ -15,7 +16,11 @@ func main() {
 	logConfig := config.NewLogConfig()
 	customLogger := logger.NewLogger(logConfig)
 
-	app := fiber.New()
+	engine := html.New("./html", ".html")
+
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	})
 	app.Use(fiberzerolog.New(fiberzerolog.Config{
 		Logger: customLogger,
 	}))
