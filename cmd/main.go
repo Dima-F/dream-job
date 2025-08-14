@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strings"
+
 	"github.com/Dima-F/dream-job/config"
 	"github.com/Dima-F/dream-job/internal/home"
 	"github.com/Dima-F/dream-job/pkg/logger"
@@ -17,6 +19,11 @@ func main() {
 	customLogger := logger.NewLogger(logConfig)
 
 	engine := html.New("./html", ".html")
+	engine.AddFuncMap(map[string]interface{}{
+		"ToUpper": func(c string) string {
+			return strings.ToUpper(c)
+		},
+	})
 
 	app := fiber.New(fiber.Config{
 		Views: engine,
