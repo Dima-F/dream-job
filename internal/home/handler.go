@@ -1,6 +1,8 @@
 package home
 
 import (
+	"github.com/Dima-F/dream-job/pkg/tadapter"
+	"github.com/Dima-F/dream-job/views"
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog"
 )
@@ -16,19 +18,8 @@ type User struct {
 }
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
-	names := []string{"Anton", "Vasya"}
-	users := []User{
-		{Id: 1, Name: "Anton"},
-		{Id: 2, Name: "Vasia"},
-	}
-	data := struct {
-		Names []string
-		Users []User
-	}{
-		Names: names,
-		Users: users,
-	}
-	return c.Render("page", data)
+	component := views.Main()
+	return tadapter.Render(c, component)
 }
 
 func (h *HomeHandler) error(c *fiber.Ctx) error {

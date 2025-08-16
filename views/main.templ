@@ -1,0 +1,15 @@
+package views
+
+import "github.com/Dima-F/dream-job/views/components"
+import "github.com/Dima-F/dream-job/views/layout"
+
+templ Main() {
+  <main>
+    @layout.Header() {
+      @components.Title(components.TitleProps{
+        Title: "Find your dream job",
+      })
+    }
+    <p>some description...</p>
+  </main>
+}
