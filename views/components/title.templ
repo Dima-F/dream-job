@@ -1,9 +1,18 @@
 package components
 
+css titleClass() {
+  font-size: { "70px"};
+  color: { templ.SafeCSSProperty("var(--color-white)") };
+  font-weight: { "bold" };
+  margin-bottom: { "12px" };
+  margin-top: { "0px" };
+
+}
+
 type TitleProps struct {
   Title string
 }
 
 templ Title(props TitleProps) {
-  <h1>{props.Title}</h1>
+  <h1 class={titleClass()}>{props.Title}</h1>
 }
