@@ -1,11 +1,16 @@
 package layout
 
+import "github.com/Dima-F/dream-job/views/components"
+
 templ Menu() {
   @MenuStyle()
   <div class="menu">
-    <div>Logo</div>
+    <img src="/public/images/logo.svg" alt="logo" />
     <div class="menu_right">
       <a href="#">Login</a>
+      @components.LinkButton("/register") {
+        <span>Register</span>
+      }
     </div>
   </div>
 }
@@ -17,6 +22,8 @@ templ MenuStyle() {
       display: flex;
       justify-content: space-between;
       padding: 20px 0;
+      max-width: 1290px;
+      align-items: center;
     }
     .menu_right {
       display: flex;
@@ -30,6 +37,10 @@ templ MenuStyle() {
     }
     .menu_right a:hover {
       color: grey;
+    }
+    .menu img {
+      width: 40px;
+      margin-left: 20px;
     }
   </style>
 }
