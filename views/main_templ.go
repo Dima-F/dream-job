@@ -87,7 +87,7 @@ func Main() templ.Component {
 			return nil
 		})
 		templ_7745c5c3_Err = layout.Layout(layout.LayoutProps{
-			Title:           "Find dream job",
+			Title:           "Find dream job *",
 			MetaDescription: "Find job site",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
