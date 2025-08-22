@@ -28,3 +28,21 @@ export GOPATH="$HOME/workspace/go"
 export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
 
 ```
+
+### Air
+
+```sh
+air
+air -c .air.debug.toml
+```
+
+### Процес дебага
+
+> air -c .air.debug.toml
+
+основний рядок тут:
+...
+full_bin = "dlv exec ./tmp/main --listen=127.0.0.1:2344 --headless=true --api-version=2 --accept-multiclient --continue --log -- "
+...
+
+#в .vscode/launch.json знаходиться конфіг для запуску дебагера
