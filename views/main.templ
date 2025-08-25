@@ -15,7 +15,15 @@ templ Main() {
           })
           @components.SubTitle("Simple job finder here...")
         }
-        <p>some description...</p>
+        Main
+        @components.Title2("Publish vocation")
+        @components.Input(components.InputProps{
+          Name: "role",
+          Placeholder: "Type role...",
+        })
+        @components.SubmitButton() {
+          <span>Send</span>
+        }
       </main>
   }
 }
