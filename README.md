@@ -29,14 +29,22 @@ export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
 
 ```
 
-### Air
+## Air
+
+### Install
+
+```sh
+go install github.com/air-verse/air@latest
+```
+
+### Using
 
 ```sh
 air
 air -c .air.debug.toml
 ```
 
-### Процес дебага
+## Процес дебага
 
 > air -c .air.debug.toml
 

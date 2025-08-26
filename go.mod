@@ -3,17 +3,17 @@ module github.com/Dima-F/dream-job
 go 1.24.5
 
 require (
+	github.com/a-h/templ v0.3.943
 	github.com/gofiber/contrib/fiberzerolog v1.0.3
 	github.com/gofiber/fiber/v2 v2.52.9
+	github.com/gofiber/template/html/v2 v2.1.3
 	github.com/joho/godotenv v1.5.1
 	github.com/rs/zerolog v1.34.0
 )
 
 require (
-	github.com/a-h/templ v0.3.943 // indirect
 	github.com/andybalholm/brotli v1.2.0 // indirect
 	github.com/gofiber/template v1.8.3 // indirect
-	github.com/gofiber/template/html/v2 v2.1.3 // indirect
 	github.com/gofiber/utils v1.1.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
