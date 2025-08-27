@@ -1,0 +1,60 @@
+package widgets
+
+import "github.com/Dima-F/dream-job/views/components"
+
+templ VacancyForm() {
+    @VacancyFormStyle()
+    <div class="vacancy-form">
+        @components.Title2("Publish vocation")
+        <form>
+            @components.Input(components.InputProps{
+                Name: "company",
+                Placeholder: "Company name",
+            })
+            @components.Input(components.InputProps{
+                Name: "type",
+                Placeholder: "Company type",
+            })
+            @components.Input(components.InputProps{
+                Name: "salary",
+                Placeholder: "Salary",
+            })
+            @components.Input(components.InputProps{
+                Name: "location",
+                Placeholder: "Location",
+            })
+            @components.Input(components.InputProps{
+                Name: "email",
+                Placeholder: "Email",
+            })
+            @components.SubmitButton() {
+                <span>Send</span>
+            }
+        </form>
+    </div>
+}
+templ VacancyFormStyle() {
+  <style>
+    .vacancy-form {
+        width: 100%;
+        background: var(--color-form);
+        padding: 20px 0;
+    }
+    .vacancy-form form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .vacancy-form form input {
+        width: 50%;
+    }
+
+    .vacancy-form form button {
+        width: 30%;
+    }
+  </style>
+}

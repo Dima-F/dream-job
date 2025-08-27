@@ -2,6 +2,7 @@ package views
 
 import "github.com/Dima-F/dream-job/views/components"
 import "github.com/Dima-F/dream-job/views/layout"
+import "github.com/Dima-F/dream-job/views/widgets"
 
 templ Main() {
   @layout.Layout(layout.LayoutProps{
@@ -16,14 +17,9 @@ templ Main() {
           @components.SubTitle("Simple job finder here...")
         }
         Main
-        @components.Title2("Publish vocation")
-        @components.Input(components.InputProps{
-          Name: "role",
-          Placeholder: "Type role...",
-        })
-        @components.SubmitButton() {
-          <span>Send</span>
-        }
+        <div>
+          @widgets.VacancyForm()
+        </div>
       </main>
   }
 }
