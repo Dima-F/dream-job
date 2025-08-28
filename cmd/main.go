@@ -5,6 +5,7 @@ import (
 
 	"github.com/Dima-F/dream-job/config"
 	"github.com/Dima-F/dream-job/internal/home"
+	"github.com/Dima-F/dream-job/internal/vacancy"
 	"github.com/Dima-F/dream-job/pkg/logger"
 	"github.com/gofiber/contrib/fiberzerolog"
 	"github.com/gofiber/fiber/v2"
@@ -35,5 +36,7 @@ func main() {
 	app.Static("/public", "./public")
 
 	home.NewHandler(app, customLogger)
+	vacancy.NewHandler(app, customLogger)
+
 	app.Listen(":3000")
 }
