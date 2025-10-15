@@ -3,6 +3,8 @@ package vacancy
 import (
 	"github.com/Dima-F/dream-job/pkg/tadapter"
 	"github.com/Dima-F/dream-job/views/components"
+	"github.com/gobuffalo/validate"
+	"github.com/gobuffalo/validate/validators"
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog"
 )
@@ -22,10 +24,18 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
 }
 
 func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
-	email := c.FormValue("email")
-	// h.customLogger.Info().Msg(email)
+	form := VacancyCreateForm{
+		Email: c.FormValue("email"),
+	}
+	errors := validate.Validate(
+		&validators.EmailIsPresent{
+			Name:    "Email",
+			Field:   form.Email,
+			Message: "Email is empty or not valid",
+		},
+	)
 
-	if email == "" {
+	if len(errors.Errors) > 0 {
 		failComponent := components.Notification("Something get wrong", components.NotificationFail)
 		return tadapter.Render(c, failComponent)
 	}
