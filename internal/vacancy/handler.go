@@ -1,7 +1,10 @@
 package vacancy
 
 import (
+	"time"
+
 	"github.com/Dima-F/dream-job/pkg/tadapter"
+	"github.com/Dima-F/dream-job/pkg/validator"
 	"github.com/Dima-F/dream-job/views/components"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
@@ -35,8 +38,10 @@ func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 		},
 	)
 
+	time.Sleep(time.Second * 2)
+
 	if len(errors.Errors) > 0 {
-		failComponent := components.Notification("Something get wrong", components.NotificationFail)
+		failComponent := components.Notification(validator.FormatErrors(errors), components.NotificationFail)
 		return tadapter.Render(c, failComponent)
 	}
 

@@ -7,7 +7,7 @@ templ VacancyForm() {
     <div class="vacancy-form">
         @components.Title2("Publish vocation")
         <div id="vacancy-result"></div>
-        <form hx-post="/vacancy" hx-trigger="submit" hx-target="#vacancy-result" hx-swap="innerHTML">
+        <form hx-post="/vacancy" hx-trigger="submit" hx-target="#vacancy-result" hx-swap="innerHTML swap:1s">
             @components.Input(components.InputProps{
                 Name: "company",
                 Placeholder: "Company name",
@@ -28,8 +28,10 @@ templ VacancyForm() {
                 Name: "email",
                 Placeholder: "Email",
             })
+            
             @components.SubmitButton() {
-                <span>Send</span>
+                <div class="vacancy-form-submit">Submit</div>
+                <div class="vacancy-form-loader"></div>
             }
         </form>
     </div>
@@ -53,9 +55,61 @@ templ VacancyFormStyle() {
     .vacancy-form form input {
         width: 50%;
     }
-
     .vacancy-form form button {
         width: 30%;
+    }
+    .htmx-swapping .notification {
+        opacity: 0;
+        transition: opacity 1s ease-out;
+    }
+    .htmx-request .vacancy-form-submit {
+        display: none;
+    }
+    .vacancy-form-submit {
+        display: block;
+    }
+
+    .htmx-request .vacancy-form-loader {
+        display: flex;
+    }
+    .vacancy-form-loader {
+        display: none;
+    }
+
+    .vacancy-form-loader {
+        width: 80px;
+        height: 40px;
+    }
+    .vacancy-form-loader:before,
+    .vacancy-form-loader:after {
+        content: "";
+        margin:0 -2px 0 0;
+        flex: 1;
+        --c:no-repeat linear-gradient(#046D8B 0 0);
+        background: var(--c), var(--c), var(--c), var(--c);
+        animation: l13-1 1s infinite linear, l13-2 1s infinite linear;
+    }
+    .vacancy-form-loader:after {
+        transform: scale(-1);
+        margin: 0 0 0 -2px;
+    }
+    @keyframes l13-1 {
+        0%,
+        3%   {background-size: 0   4px,4px 0  ,0   4px,4px 0  }
+        12.5%{background-size: 50% 4px,4px 0  ,0   4px,4px 0  }
+        25%  {background-size: 50% 4px,4px 50%,0   4px,4px 0  }
+        37.5%{background-size: 50% 4px,4px 50%,50% 4px,4px 0  }
+        46%,
+        54%  {background-size: 50% 4px,4px 50%,50% 4px,4px 50%}
+        62.5%{background-size: 0   4px,4px 50%,50% 4px,4px 50%}
+        75%  {background-size: 0   4px,4px 0  ,50% 4px,4px 50%}
+        87.5%{background-size: 0   4px,4px 0  ,0   4px,4px 50%}
+        96%,
+        100% {background-size: 0   4px,4px 0  ,0   4px,4px 0  }
+    }
+    @keyframes l13-2 {
+        0%,49.9%{background-position:0              20px,50% 20px,20px 100%,100% 100%}
+        50%,100%{background-position:right 20px top 20px,50% 100%,100% 100%,100% 20px}
     }
   </style>
 }
