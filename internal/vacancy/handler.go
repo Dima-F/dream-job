@@ -1,8 +1,6 @@
 package vacancy
 
 import (
-	"time"
-
 	"github.com/Dima-F/dream-job/pkg/tadapter"
 	"github.com/Dima-F/dream-job/pkg/validator"
 	"github.com/Dima-F/dream-job/views/components"
@@ -28,7 +26,12 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
 
 func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 	form := VacancyCreateForm{
-		Email: c.FormValue("email"),
+		Email:    c.FormValue("email"),
+		Location: c.FormValue("location"),
+		Type:     c.FormValue("type"),
+		Company:  c.FormValue("company"),
+		Role:     c.FormValue("role"),
+		Salary:   c.FormValue("salary"),
 	}
 	errors := validate.Validate(
 		&validators.EmailIsPresent{
@@ -36,9 +39,34 @@ func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 			Field:   form.Email,
 			Message: "Email is empty or not valid",
 		},
+		&validators.StringIsPresent{
+			Name:    "Location",
+			Field:   form.Location,
+			Message: "Location is required",
+		},
+		&validators.StringIsPresent{
+			Name:    "Type",
+			Field:   form.Type,
+			Message: "Company type is required",
+		},
+		&validators.StringIsPresent{
+			Name:    "Company",
+			Field:   form.Company,
+			Message: "Company name is required",
+		},
+		&validators.StringIsPresent{
+			Name:    "Role",
+			Field:   form.Role,
+			Message: "Role is required",
+		},
+		&validators.StringIsPresent{
+			Name:    "Salary",
+			Field:   form.Salary,
+			Message: "Salary is required",
+		},
 	)
 
-	time.Sleep(time.Second * 2)
+	// time.Sleep(time.Second * 2)
 
 	if len(errors.Errors) > 0 {
 		failComponent := components.Notification(validator.FormatErrors(errors), components.NotificationFail)
