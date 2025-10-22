@@ -62,3 +62,10 @@ full_bin = "dlv exec ./tmp/main --listen=127.0.0.1:2344 --headless=true --api-ve
 Віджети повині використовувати компоненти (не інші віджети)
 
 Шаблони можуть використовувати як віджети, так і компоненти
+
+# PG
+
+```sh
+go get github.com/jackc/pgx/v5
+go get github.com/jackc/pgx/v5/pgxpool
+```

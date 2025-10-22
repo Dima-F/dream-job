@@ -6,6 +6,7 @@ import (
 	"github.com/Dima-F/dream-job/config"
 	"github.com/Dima-F/dream-job/internal/home"
 	"github.com/Dima-F/dream-job/internal/vacancy"
+	"github.com/Dima-F/dream-job/pkg/database"
 	"github.com/Dima-F/dream-job/pkg/logger"
 	"github.com/gofiber/contrib/fiberzerolog"
 	"github.com/gofiber/fiber/v2"
@@ -17,6 +18,7 @@ func main() {
 	config.Init()
 	config.NewDatabaseConfig()
 	logConfig := config.NewLogConfig()
+	dbConfig := config.NewDatabaseConfig()
 	customLogger := logger.NewLogger(logConfig)
 
 	engine := html.New("./html", ".html")
@@ -34,6 +36,9 @@ func main() {
 	}))
 	app.Use(recover.New())
 	app.Static("/public", "./public")
+
+	dbpool := database.CreateDbPool(dbConfig, customLogger)
+	defer dbpool.Close()
 
 	home.NewHandler(app, customLogger)
 	vacancy.NewHandler(app, customLogger)
