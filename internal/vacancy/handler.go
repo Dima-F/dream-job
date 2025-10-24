@@ -1,6 +1,8 @@
 package vacancy
 
 import (
+	"net/http"
+
 	"github.com/Dima-F/dream-job/pkg/tadapter"
 	"github.com/Dima-F/dream-job/pkg/validator"
 	"github.com/Dima-F/dream-job/views/components"
@@ -13,12 +15,14 @@ import (
 type VacancyHandler struct {
 	router       fiber.Router
 	customLogger *zerolog.Logger
+	repository   *VacancyRepository
 }
 
-func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
+func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *VacancyRepository) {
 	h := &VacancyHandler{
 		router:       router,
 		customLogger: customLogger,
+		repository:   repository,
 	}
 	vacancyGroup := h.router.Group("/vacancy")
 	vacancyGroup.Post("/", h.createVacancy)
@@ -70,9 +74,16 @@ func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 
 	if len(errors.Errors) > 0 {
 		failComponent := components.Notification(validator.FormatErrors(errors), components.NotificationFail)
-		return tadapter.Render(c, failComponent)
+		return tadapter.Render(c, failComponent, http.StatusBadRequest)
+	}
+
+	err := h.repository.addVacancy(form)
+
+	if err != nil {
+		errComponent := components.Notification(err.Error(), components.NotificationFail)
+		return tadapter.Render(c, errComponent, http.StatusBadRequest)
 	}
 
 	successComponent := components.Notification("Vacancy created successfully", components.NotificationSuccess)
-	return tadapter.Render(c, successComponent)
+	return tadapter.Render(c, successComponent, http.StatusOK)
 }

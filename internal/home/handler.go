@@ -1,6 +1,8 @@
 package home
 
 import (
+	"net/http"
+
 	"github.com/Dima-F/dream-job/pkg/tadapter"
 	"github.com/Dima-F/dream-job/views"
 	"github.com/gofiber/fiber/v2"
@@ -19,7 +21,7 @@ type User struct {
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
 	component := views.Main()
-	return tadapter.Render(c, component)
+	return tadapter.Render(c, component, http.StatusOK)
 }
 
 func (h *HomeHandler) error(c *fiber.Ctx) error {

@@ -15,6 +15,7 @@ import (
 )
 
 func main() {
+	// config
 	config.Init()
 	config.NewDatabaseConfig()
 	logConfig := config.NewLogConfig()
@@ -40,8 +41,12 @@ func main() {
 	dbpool := database.CreateDbPool(dbConfig, customLogger)
 	defer dbpool.Close()
 
+	// repositories
+	vacancyRepo := vacancy.NewVacancyRepository(dbpool, customLogger)
+
+	// handlers
 	home.NewHandler(app, customLogger)
-	vacancy.NewHandler(app, customLogger)
+	vacancy.NewHandler(app, customLogger, vacancyRepo)
 
 	app.Listen(":3000")
 }
