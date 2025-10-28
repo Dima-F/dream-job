@@ -3,6 +3,7 @@ package views
 import "github.com/Dima-F/dream-job/views/components"
 import "github.com/Dima-F/dream-job/views/layout"
 import "github.com/Dima-F/dream-job/views/widgets"
+import "time"
 
 templ Main() {
   @layout.Layout(layout.LayoutProps{
@@ -16,7 +17,15 @@ templ Main() {
           })
           @components.SubTitle("Simple job finder here...")
         }
-        Main
+        @components.VacancyCard(components.VacancyCardProps{
+          Email:"",
+          Location: "Online",
+          Salary: "1000$",
+          CompanyType: "IT",
+          Company: "Purple",
+          Createdat: time.Now(),
+          Role: "Developer",
+        })
         <div>
           @widgets.VacancyForm()
         </div>
