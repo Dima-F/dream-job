@@ -3,6 +3,7 @@ package home
 import (
 	"net/http"
 
+	"github.com/Dima-F/dream-job/internal/vacancy"
 	"github.com/Dima-F/dream-job/pkg/tadapter"
 	"github.com/Dima-F/dream-job/views"
 	"github.com/gofiber/fiber/v2"
@@ -12,6 +13,7 @@ import (
 type HomeHandler struct {
 	router       fiber.Router
 	customLogger *zerolog.Logger
+	repository   *vacancy.VacancyRepository
 }
 
 type User struct {
@@ -20,7 +22,12 @@ type User struct {
 }
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
-	component := views.Main()
+	vacancies, err := h.repository.GetAll()
+	if err != nil {
+		h.customLogger.Error().Msg(err.Error())
+		return c.SendStatus(500)
+	}
+	component := views.Main(vacancies)
 	return tadapter.Render(c, component, http.StatusOK)
 }
 
@@ -29,10 +36,11 @@ func (h *HomeHandler) error(c *fiber.Ctx) error {
 	return fiber.NewError(fiber.StatusBadRequest, "Limit params is undefined")
 }
 
-func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
+func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *vacancy.VacancyRepository) {
 	h := &HomeHandler{
 		router:       router,
 		customLogger: customLogger,
+		repository:   repository,
 	}
 	api := h.router.Group("/api")
 	api.Get("/", h.home)

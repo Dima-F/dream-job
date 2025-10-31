@@ -3,9 +3,9 @@ package views
 import "github.com/Dima-F/dream-job/views/components"
 import "github.com/Dima-F/dream-job/views/layout"
 import "github.com/Dima-F/dream-job/views/widgets"
-import "time"
+import "github.com/Dima-F/dream-job/internal/vacancy"
 
-templ Main() {
+templ Main(vacancies []vacancy.Vacancy) {
   @layout.Layout(layout.LayoutProps{
     Title: "Find dream job *",
     MetaDescription: "Find job site",
@@ -17,15 +17,20 @@ templ Main() {
           })
           @components.SubTitle("Simple job finder here...")
         }
-        @components.VacancyCard(components.VacancyCardProps{
-          Email:"",
-          Location: "Online",
-          Salary: "1000$",
-          CompanyType: "IT",
-          Company: "Purple",
-          Createdat: time.Now(),
-          Role: "Developer",
-        })
+        <div>
+          for _, vacancy := range vacancies {
+            @components.VacancyCard(components.VacancyCardProps{
+              Email:vacancy.Email,
+              Location: vacancy.Location,
+              Salary: vacancy.Salary,
+              CompanyType: vacancy.Type,
+              Company: vacancy.Company,
+              Createdat: vacancy.CreatedAt,
+              Role: vacancy.Role,
+            })
+          }
+        </div>
+        
         <div>
           @widgets.VacancyForm()
         </div>
