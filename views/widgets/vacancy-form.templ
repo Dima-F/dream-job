@@ -5,7 +5,7 @@ import "github.com/Dima-F/dream-job/views/components"
 templ VacancyForm() {
     @VacancyFormStyle()
     <div class="vacancy-form" hx-ext="response-targets">
-        @components.Title2("Publish vocation")
+        @components.Title2("Publish vocation", true)
         <div id="vacancy-result"></div>
         <form
             hx-post="/vacancy"

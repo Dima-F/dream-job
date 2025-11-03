@@ -18,21 +18,8 @@ templ Main(vacancies []vacancy.Vacancy) {
           @components.SubTitle("Simple job finder here...")
         }
         <div>
-          for _, vacancy := range vacancies {
-            @components.VacancyCard(components.VacancyCardProps{
-              Email:vacancy.Email,
-              Location: vacancy.Location,
-              Salary: vacancy.Salary,
-              CompanyType: vacancy.Type,
-              Company: vacancy.Company,
-              Createdat: vacancy.CreatedAt,
-              Role: vacancy.Role,
-            })
-          }
-        </div>
-        
-        <div>
           @widgets.VacancyForm()
+          @widgets.VacancyList(vacancies)
         </div>
       </main>
   }

@@ -1,0 +1,49 @@
+package widgets
+
+import "github.com/Dima-F/dream-job/internal/vacancy"
+import "github.com/Dima-F/dream-job/views/components"
+
+templ VacancyList(vacancies []vacancy.Vacancy) {
+  @VacancyListStyle()
+  <div class="vacancy-wrapper">
+    @components.Title2("Last vacancies", false)
+    <p>Find any vacancy</p>
+    <div class="vacancy-list">
+      for _, vacancy := range vacancies {
+        @components.VacancyCard(components.VacancyCardProps{
+          Email:vacancy.Email,
+          Location: vacancy.Location,
+          Salary: vacancy.Salary,
+          CompanyType: vacancy.Type,
+          Company: vacancy.Company,
+          Createdat: vacancy.CreatedAt,
+          Role: vacancy.Role,
+        })
+      }
+    </div>
+  </div>
+}
+
+templ VacancyListStyle() {
+  <style>
+  .vacancy-list {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1296px;
+    margin: 0 auto;
+  }
+  .vacancy-wrapper {
+    width: 100%;
+    max-width: 1296px;
+    margin: 0 auto;
+    padding: 60px 0;
+  }
+
+  .vacancy-wrapper p {
+    margin-bottom: 60px;
+  }
+  </style>
+}
