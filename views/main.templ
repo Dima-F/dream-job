@@ -5,7 +5,7 @@ import "github.com/Dima-F/dream-job/views/layout"
 import "github.com/Dima-F/dream-job/views/widgets"
 import "github.com/Dima-F/dream-job/internal/vacancy"
 
-templ Main(vacancies []vacancy.Vacancy) {
+templ Main(vacancies []vacancy.Vacancy, pagesCount int, page int) {
   @layout.Layout(layout.LayoutProps{
     Title: "Find dream job *",
     MetaDescription: "Find job site",
@@ -19,7 +19,7 @@ templ Main(vacancies []vacancy.Vacancy) {
         }
         <div>
           @widgets.VacancyForm()
-          @widgets.VacancyList(vacancies)
+          @widgets.VacancyList(vacancies, pagesCount, page)
         </div>
       </main>
   }

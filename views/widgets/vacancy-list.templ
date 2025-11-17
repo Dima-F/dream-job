@@ -2,8 +2,9 @@ package widgets
 
 import "github.com/Dima-F/dream-job/internal/vacancy"
 import "github.com/Dima-F/dream-job/views/components"
+import "fmt"
 
-templ VacancyList(vacancies []vacancy.Vacancy) {
+templ VacancyList(vacancies []vacancy.Vacancy, pagesCount , page int) {
   @VacancyListStyle()
   <div class="vacancy-wrapper">
     @components.Title2("Last vacancies", false)
@@ -19,6 +20,14 @@ templ VacancyList(vacancies []vacancy.Vacancy) {
           Createdat: vacancy.CreatedAt,
           Role: vacancy.Role,
         })
+      }
+    </div>
+    <div>
+      if page != 1 {
+        <a href={templ.SafeURL(fmt.Sprintf("/api?page=%d", page - 1))}>Prev</a>
+      }
+      if page != pagesCount {
+        <a href={templ.SafeURL(fmt.Sprintf("/api?page=%d", page + 1))}>Next</a>
       }
     </div>
   </div>

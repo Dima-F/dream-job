@@ -1,6 +1,7 @@
 package home
 
 import (
+	"math"
 	"net/http"
 
 	"github.com/Dima-F/dream-job/internal/vacancy"
@@ -22,12 +23,15 @@ type User struct {
 }
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
-	vacancies, err := h.repository.GetAll()
+	PAGE_ITEMS := 5
+	page := c.QueryInt("page", 1)
+	count := h.repository.CountAll()
+	vacancies, err := h.repository.GetAll(PAGE_ITEMS, (page-1)*PAGE_ITEMS)
 	if err != nil {
 		h.customLogger.Error().Msg(err.Error())
 		return c.SendStatus(500)
 	}
-	component := views.Main(vacancies)
+	component := views.Main(vacancies, int(math.Ceil(float64(count/PAGE_ITEMS))), page)
 	return tadapter.Render(c, component, http.StatusOK)
 }
 
