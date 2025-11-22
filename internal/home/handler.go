@@ -40,6 +40,11 @@ func (h *HomeHandler) error(c *fiber.Ctx) error {
 	return fiber.NewError(fiber.StatusBadRequest, "Limit params is undefined")
 }
 
+func (h *HomeHandler) login(c *fiber.Ctx) error {
+	component := views.Login()
+	return tadapter.Render(c, component, http.StatusOK)
+}
+
 func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *vacancy.VacancyRepository) {
 	h := &HomeHandler{
 		router:       router,
@@ -48,5 +53,6 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *v
 	}
 	api := h.router.Group("/api")
 	api.Get("/", h.home)
+	api.Get("/login", h.login)
 	api.Get("/error", h.error)
 }

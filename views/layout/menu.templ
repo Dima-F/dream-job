@@ -5,9 +5,11 @@ import "github.com/Dima-F/dream-job/views/components"
 templ Menu() {
   @MenuStyle()
   <div class="menu">
-    <img src="/public/images/logo.svg" alt="logo" />
+    <a href="/api">
+      <img src="/public/images/logo.svg" alt="logo" />
+    </a>
     <div class="menu_right">
-      <a href="#">Login</a>
+      <a href="/api/login">Login</a>
       @components.LinkButton("/register") {
         <span>Register</span>
       }

@@ -22,13 +22,17 @@ templ VacancyList(vacancies []vacancy.Vacancy, pagesCount , page int) {
         })
       }
     </div>
-    <div>
-      if page != 1 {
-        <a href={templ.SafeURL(fmt.Sprintf("/api?page=%d", page - 1))}>Prev</a>
-      }
-      if page != pagesCount {
-        <a href={templ.SafeURL(fmt.Sprintf("/api?page=%d", page + 1))}>Next</a>
-      }
+    <div class="vacancy-list_pagination">
+      <div>
+        if page != 1 {
+          <a href={templ.SafeURL(fmt.Sprintf("/api?page=%d", page - 1))}>{"<  Prev"}</a>
+        }
+      </div>
+      <div>
+        if page != pagesCount {
+          <a href={templ.SafeURL(fmt.Sprintf("/api?page=%d", page + 1))}>{"Next  >"}</a>
+        }
+      </div>
     </div>
   </div>
 }
@@ -53,6 +57,17 @@ templ VacancyListStyle() {
 
   .vacancy-wrapper p {
     margin-bottom: 60px;
+  }
+  .vacancy-list_pagination {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .vacancy-list_pagination a {
+    text-decoration: none;
+    color: #6c757d
   }
   </style>
 }

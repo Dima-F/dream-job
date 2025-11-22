@@ -1,0 +1,26 @@
+package views
+
+import "github.com/Dima-F/dream-job/views/components"
+import "github.com/Dima-F/dream-job/views/layout"
+
+templ Login() {
+  @layout.Layout(layout.LayoutProps{
+    Title: "Login",
+    MetaDescription: "Login to dream job site",
+  }) {
+      <main>
+        @LoginStyle()
+        @layout.Header() {
+          @components.Title(components.TitleProps{
+            Title: "Login",
+          })
+          @components.SubTitle("Login with your creds")
+        }
+      </main>
+  }
+}
+
+templ LoginStyle() {
+  <style>
+  </style>
+}
