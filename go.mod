@@ -6,7 +6,7 @@ require (
 	github.com/a-h/templ v0.3.943
 	github.com/gobuffalo/validate v2.0.4+incompatible
 	github.com/gofiber/contrib/fiberzerolog v1.0.3
-	github.com/gofiber/fiber/v2 v2.52.9
+	github.com/gofiber/fiber/v2 v2.52.10
 	github.com/gofiber/template/html/v2 v2.1.3
 	github.com/jackc/pgx/v5 v5.7.6
 	github.com/joho/godotenv v1.5.1
