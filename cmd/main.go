@@ -2,6 +2,7 @@ package main
 
 import (
 	"strings"
+	"time"
 
 	"github.com/Dima-F/dream-job/config"
 	"github.com/Dima-F/dream-job/internal/home"
@@ -12,6 +13,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/middleware/session"
+	"github.com/gofiber/storage/postgres/v3"
 	"github.com/gofiber/template/html/v2"
 )
 
@@ -42,7 +44,16 @@ func main() {
 	dbpool := database.CreateDbPool(dbConfig, customLogger)
 	defer dbpool.Close()
 
-	store := session.New()
+	storage := postgres.New(postgres.Config{
+		DB:         dbpool,
+		Table:      "session_storage",
+		Reset:      false,
+		GCInterval: 10 * time.Second,
+	})
+
+	store := session.New(session.Config{
+		Storage: storage,
+	})
 
 	// repositories
 	vacancyRepo := vacancy.NewVacancyRepository(dbpool, customLogger)

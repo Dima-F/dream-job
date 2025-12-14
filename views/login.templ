@@ -2,6 +2,7 @@ package views
 
 import "github.com/Dima-F/dream-job/views/components"
 import "github.com/Dima-F/dream-job/views/layout"
+import "github.com/Dima-F/dream-job/views/widgets"
 
 templ Login() {
   @layout.Layout(layout.LayoutProps{
@@ -15,6 +16,7 @@ templ Login() {
             Title: "Login",
           })
           @components.SubTitle("Login with your creds")
+          @widgets.LoginForm()
         }
       </main>
   }
