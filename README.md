@@ -69,3 +69,8 @@ full_bin = "dlv exec ./tmp/main --listen=127.0.0.1:2344 --headless=true --api-ve
 go get github.com/jackc/pgx/v5
 go get github.com/jackc/pgx/v5/pgxpool
 ```
+
+
+# Захардкожені креди для логіна
+a@a.ua
+123456

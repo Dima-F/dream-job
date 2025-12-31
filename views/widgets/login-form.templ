@@ -4,24 +4,30 @@ import "github.com/Dima-F/dream-job/views/components"
 
 templ LoginForm() {
     @LoginFormStyle()
-    <form
-      hx-post="/login"
-      hx-trigger="submit"
-      class="login-form"
-    >
-      @components.Input(components.InputProps{
-        Name: "email",
-        Placeholder: "Email",
-      })
-      @components.Input(components.InputProps{
-        Name: "password",
-        Placeholder: "Password",
-      })
-      @components.SubmitButton() {
-        <span>Publish</span>
-      }
-    </form>
+      <div id="login-result"></div>
+      <form
+        hx-ext="response-targets"
+        hx-post="/api/login"
+        hx-trigger="submit"
+        hx-targe-error="#login-result"
+        hx-swap="innerHTML"
+        class="login-form"
+      >
+        @components.Input(components.InputProps{
+          Name: "email",
+          Placeholder: "Email",
+        })
+        @components.Input(components.InputProps{
+          Name: "password",
+          Placeholder: "Password",
+          Type: "password",
+        })
+        @components.SubmitButton() {
+          <span>Publishs</span>
+        }
+      </form>
 }
+
 
 templ LoginFormStyle() {
   <style>
