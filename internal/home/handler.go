@@ -28,15 +28,6 @@ type User struct {
 func (h *HomeHandler) home(c *fiber.Ctx) error {
 	PAGE_ITEMS := 5
 	page := c.QueryInt("page", 1)
-
-	sess, err := h.store.Get(c)
-	if err != nil {
-		panic(err)
-	}
-
-	if name, ok := sess.Get("name").(string); ok {
-		h.customLogger.Info().Msg(name)
-	}
 	count := h.repository.CountAll()
 	vacancies, err := h.repository.GetAll(PAGE_ITEMS, (page-1)*PAGE_ITEMS)
 	if err != nil {
@@ -57,6 +48,19 @@ func (h *HomeHandler) login(c *fiber.Ctx) error {
 	return tadapter.Render(c, component, http.StatusOK)
 }
 
+func (h *HomeHandler) apiLogout(c *fiber.Ctx) error {
+	sess, err := h.store.Get(c)
+	if err != nil {
+		panic(err)
+	}
+	sess.Delete("email")
+	if err := sess.Save(); err != nil {
+		panic(err)
+	}
+	c.Response().Header.Add("Hx-Redirect", "/api/login")
+	return c.Redirect("/", http.StatusOK)
+}
+
 func (h *HomeHandler) apiLogin(c *fiber.Ctx) error {
 	form := LoginForm{
 		Email:    c.FormValue("email"),
@@ -71,7 +75,8 @@ func (h *HomeHandler) apiLogin(c *fiber.Ctx) error {
 		if err := sess.Save(); err != nil {
 			panic(err)
 		}
-		return c.Redirect("/", http.StatusOK)
+		c.Response().Header.Add("Hx-Redirect", "/api")
+		return c.Redirect("/api", http.StatusOK)
 	}
 	errComponent := components.Notification("Login error", components.NotificationFail)
 	return tadapter.Render(c, errComponent, http.StatusBadRequest)
@@ -88,5 +93,6 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *v
 	api.Get("/", h.home)
 	api.Get("/login", h.login)
 	api.Post("/login", h.apiLogin)
+	api.Get("/logout", h.apiLogout)
 	api.Get("/error", h.error)
 }

@@ -8,8 +8,7 @@ templ LoginForm() {
       <form
         hx-ext="response-targets"
         hx-post="/api/login"
-        hx-trigger="submit"
-        hx-targe-error="#login-result"
+        hx-target-error="#login-result"
         hx-swap="innerHTML"
         class="login-form"
       >
@@ -23,7 +22,7 @@ templ LoginForm() {
           Type: "password",
         })
         @components.SubmitButton() {
-          <span>Publishs</span>
+          <span>Publish</span>
         }
       </form>
 }
@@ -38,6 +37,11 @@ templ LoginFormStyle() {
       width: 100%;
       max-width: 520px;
       margin: 0 auto;
+    }
+    #login-result {
+      max-width: 400px;
+      margin: 20px auto;
+      border-radius: 8px;
     }
   </style>
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/Dima-F/dream-job/internal/vacancy"
 	"github.com/Dima-F/dream-job/pkg/database"
 	"github.com/Dima-F/dream-job/pkg/logger"
+	"github.com/Dima-F/dream-job/pkg/middleware"
 	"github.com/gofiber/contrib/fiberzerolog"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -54,6 +55,8 @@ func main() {
 	store := session.New(session.Config{
 		Storage: storage,
 	})
+
+	app.Use(middleware.AuthMiddleware(store))
 
 	// repositories
 	vacancyRepo := vacancy.NewVacancyRepository(dbpool, customLogger)

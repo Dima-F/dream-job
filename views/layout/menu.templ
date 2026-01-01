@@ -1,7 +1,5 @@
 package layout
 
-import "github.com/Dima-F/dream-job/views/components"
-
 templ Menu() {
   @MenuStyle()
   <div class="menu">
@@ -9,11 +7,18 @@ templ Menu() {
       <img src="/public/images/logo.svg" alt="logo" />
     </a>
     <div class="menu_right">
-      <a href="/api/login">Login</a>
-      @components.LinkButton("/register") {
-        <span>Register</span>
+      {{ email := ctx.Value("email") }}
+      if email == nil || email.(string) == "" {
+        <a href="/api/login">Login</a>
+      } else {
+        <span>{email.(string)}</span>
+        <a
+          hx-get="/api/logout"
+          hx-trigger="click"
+        >Logout</a>
       }
     </div>
+
   </div>
 }
 
