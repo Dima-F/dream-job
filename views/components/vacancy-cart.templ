@@ -2,8 +2,11 @@ package components
 
 import "time"
 import "github.com/rvflash/elapsed"
+import "strconv"
+import "fmt"
 
 type VacancyCardProps struct {
+  Id int
   Createdat time.Time
   Role string
   Location string
@@ -16,7 +19,11 @@ type VacancyCardProps struct {
 templ VacancyCard(props VacancyCardProps) {
   {{ date := elapsed.LocalTime(props.Createdat, "us")}}
   @VacancyCardStyle()
-  <div class="vacancy-card">
+  @VacancyCardScript()
+  @templ.JSONScript(fmt.Sprintf("vacancy-id-%d", props.Id), props)
+  <div
+    class="vacancy-card"
+  >
     <div>
       <span class="vacancy-card_createdat">{ date }</span>
     </div>
@@ -39,11 +46,33 @@ templ VacancyCard(props VacancyCardProps) {
           <span>{ props.Location }</span>
         </div>
       </div>
-      @LinkButton("#"){
-        <span>Send</span>
+      @Button(templ.JSFuncCall(
+          "submitHandler",
+          templ.JSExpression(strconv.Itoa(props.Id)),
+        ),
+      ) {
+        <span>Submit</span>
       }
     </div>
   </div>
+}
+
+templ VacancyCardScript() {
+  <script>
+  function getJSONScript(id) {
+    const el = document.getElementById(id);
+    if (!el) return null;
+    return JSON.parse(el.textContent);
+  }
+
+  function submitHandler(id) {
+    const data = getJSONScript(`vacancy-id-${id}`);
+
+    console.log("Vacancy object:", data);
+    console.log("Role:", data.Role);
+    console.log("Email:", data.Email);
+  }
+  </script>
 }
 
 templ VacancyCardStyle() {
