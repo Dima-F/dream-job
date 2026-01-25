@@ -6,6 +6,7 @@ import (
 
 	"github.com/Dima-F/dream-job/config"
 	"github.com/Dima-F/dream-job/internal/home"
+	"github.com/Dima-F/dream-job/internal/sitemap"
 	"github.com/Dima-F/dream-job/internal/vacancy"
 	"github.com/Dima-F/dream-job/pkg/database"
 	"github.com/Dima-F/dream-job/pkg/logger"
@@ -64,6 +65,7 @@ func main() {
 	// handlers
 	home.NewHandler(app, customLogger, vacancyRepo, store)
 	vacancy.NewHandler(app, customLogger, vacancyRepo)
+	sitemap.NewHandler(app)
 
 	app.Listen(":3000")
 }

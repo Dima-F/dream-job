@@ -74,3 +74,9 @@ go get github.com/jackc/pgx/v5/pgxpool
 # Захардкожені креди для логіна
 a@a.ua
 123456
+
+
+# Docker
+
+docker build -t go-app .
+
